@@ -261,7 +261,7 @@ const IncomeDashboard = () => {
           <p className="text-center text-3xl text-green-500 font-semibold mt-4">Rs:{formatNumbers(totalIncome.toFixed(2))}</p>
         </div>
         
-        <div className="bg-white rounded-xl p-4 ">
+        <div className=" bg-slate-600  rounded-xl p-4 ">
         {/* Charts Section: Pie chart and Bar chart side by side */}
         <div className="flex flex-wrap gap-4 mb-8 justify-center">
           {/* Pie Chart */}
