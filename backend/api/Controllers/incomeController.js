@@ -21,7 +21,7 @@ export const getIncomeById = async (req, res) => {
   }
 };
 
-// Create a new income entry
+// Creat
 export const createIncome = async (req, res) => {
   try {
     const { incomeSource, description, incomeCategory, incomeType, amount,date,phone } = req.body;
