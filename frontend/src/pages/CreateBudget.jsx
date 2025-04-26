@@ -5,15 +5,14 @@ import BudgetSideBar from "../Components/BudgetSideBar";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-// 
 const CreateBudget = () => {
   const [formData, setFormData] = useState({
     amount: "",
     category: "Select a category",
     notes: "",
     startDate: "",
-    responsiblePerson:"",
-    phone:""
+    responsiblePerson: "",
+    phone: ""
   });
 
   const [errors, setErrors] = useState({});
@@ -47,9 +46,9 @@ const CreateBudget = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (formData.phone.length !== 10) {
-          toast.error("Phone number must be exactly 10 digits.");
-          return;
-        }
+      toast.error("Phone number must be exactly 10 digits.");
+      return;
+    }
     if (!validateForm()) return;
 
     try {
@@ -61,11 +60,10 @@ const CreateBudget = () => {
         category: "Select a category",
         notes: "",
         startDate: "",
-        responsiblePerson:"",
-        phone:""
+        responsiblePerson: "",
+        phone: ""
       });
 
-    
     } catch (error) {
       console.error("Error creating budget:", error);
       toast.error("Failed to create budget.");
@@ -75,19 +73,32 @@ const CreateBudget = () => {
   const handleChange = (e) => {
     const { name, value } = e.target;
 
-
     if ((name === 'amount') && isNaN(value)) {
-              toast.error(`${name.charAt(0).toUpperCase() + name.slice(1)} must be a number`);
-              return;
-            }
-    
-            if (name === "phone") {
-                  if (!/^\d*$/.test(value)) {
-                    toast.error("Phone number must contain only numbers.");
-                    return;
-                  }
-                }
-    
+      toast.error(`${name.charAt(0).toUpperCase() + name.slice(1)} must be a number`);
+      return;
+    }
+
+    if (name === "phone") {
+      if (!/^\d*$/.test(value)) {
+        toast.error("Phone number must contain only numbers.");
+        return;
+      }
+    }
+
+    if (name === "notes") {
+      if (!/^[A-Za-z\s]*$/.test(value)) {
+        toast.error("Notes must contain only letters and spaces.");
+        return;
+      }
+    }
+
+    if (name === "responsiblePerson") {
+      if (!/^[A-Za-z\s]*$/.test(value)) {
+        toast.error("Responsible Person must contain only letters and spaces.");
+        return;
+      }
+    }
+
     setFormData({ ...formData, [name]: value });
   };
 
@@ -175,6 +186,7 @@ const CreateBudget = () => {
               />
               {errors.responsiblePerson && <p className="text-red-500 text-sm">{errors.responsiblePerson}</p>}
             </div>
+
             <div className="mb-4">
               <label className="block text-sm font-medium text-gray-300">
                 Phone Number
@@ -197,17 +209,16 @@ const CreateBudget = () => {
             </button>
           </form>
         </div>
-      </div>\
-       <ToastContainer 
-              position="top-center" 
-              autoClose={5000} 
-              hideProgressBar
-              closeButton={false}
-              toastClassName="custom-toast"  
-            />
+      </div>
+      <ToastContainer
+        position="top-center"
+        autoClose={5000}
+        hideProgressBar
+        closeButton={false}
+        toastClassName="custom-toast"
+      />
     </div>
   );
 };
 
 export default CreateBudget;
-
