@@ -43,6 +43,9 @@ const BudgetPage = () => {
     navigate(`/edit-budget/${id}`);
   };
 
+
+  //sadfdghjkjhgj
+
   const filteredBudgets = budgets.filter((budget) =>
     budget.category.toLowerCase().includes(searchQuery.toLowerCase())
   );
