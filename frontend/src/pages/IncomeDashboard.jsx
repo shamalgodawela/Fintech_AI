@@ -261,7 +261,7 @@ const IncomeDashboard = () => {
           <p className="text-center text-3xl text-green-500 font-semibold mt-4">Rs:{formatNumbers(totalIncome.toFixed(2))}</p>
         </div>
         
-        <div className="bg-white rounded-xl p-4 ">
+        <div className=" bg-slate-600  rounded-xl p-4 ">
         {/* Charts Section: Pie chart and Bar chart side by side */}
         <div className="flex flex-wrap gap-4 mb-8 justify-center">
           {/* Pie Chart */}
@@ -324,7 +324,7 @@ const IncomeDashboard = () => {
 
         {/* Income List Table (Hidden) */}
         <div className="hidden overflow-x-auto shadow-md rounded-lg">
-          <table className="w-full bg-white border border-gray-200">
+          <table className="w-full bg-gray-400 border border-gray-200">
             <thead className="bg-gray-400 text-slate-950">
               <tr>
                 {['Income Source', 'Category', 'Type', 'Amount', 'Description', 'Date', 'Actions'].map((header) => (
