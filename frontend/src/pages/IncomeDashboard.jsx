@@ -261,24 +261,24 @@ const IncomeDashboard = () => {
           <p className="text-center text-3xl text-green-500 font-semibold mt-4">Rs:{formatNumbers(totalIncome.toFixed(2))}</p>
         </div>
         
-        <div className=" bg-slate-600  rounded-xl p-4 fle">
+        <div className=" bg-transparent  rounded-xl p-4 fle">
         {/* Charts Section: Pie chart and Bar chart side by side */}
         <div className="flex flex-wrap gap-4 mb-8 justify-center">
           {/* Pie Chart */}
-          <div className="w-[30%] min-w-[300px]">
+          <div className="w-[30%] min-w-[300px] shadow-lg rounded-xl p-6 mb-8  bg-slate-600">
             <h3 className="text-xl font-bold text-center mb-2 text-black">Total Income by Type</h3>
             <Pie data={pieChartData} ref={pieChartRef} />
           </div>
 
           {/* Bar Chart */}
-          <div className="w-[48%] min-w-[300px]">
+          <div className="w-[48%] min-w-[300px] shadow-lg rounded-xl p-6 mb-8  bg-slate-600">
             <h3 className="text-xl font-bold text-center mb-2 text-black">Total Income by Category</h3>
             <Bar data={barChartData} ref={barChartRef} />
           </div>
         </div>
 
         {/* New Line Chart Section: Income by Source */}
-        <div className="max-w-md mx-auto shadow-lg rounded-xl p-6 mb-8 bg-white">
+        <div className="max-w-md mx-auto shadow-lg rounded-xl p-6 mb-8  bg-slate-600 ">
           <h3 className="text-2xl font-bold text-center mb-4">Income by Source</h3>
           <Line data={lineChartData} />
         </div>
