@@ -40,6 +40,8 @@ const IncomeList = () => {
   
     };
 
+    
+
   const handleDelete = async (id) => {
     if (window.confirm("Are you sure you want to delete this income entry?")) {
       try {
@@ -136,40 +138,6 @@ const IncomeList = () => {
     })
   );
 
-  // Prepare data for Pie chart (Total income by income type)
-  const incomeTypes = filteredIncomes.reduce((acc, income) => {
-    acc[income.incomeType] = (acc[income.incomeType] || 0) + income.amount;
-    return acc;
-  }, {});
-
-  const pieChartData = {
-    labels: Object.keys(incomeTypes),
-    datasets: [
-      {
-        data: Object.values(incomeTypes),
-        backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0', '#9966FF'],
-      },
-    ],
-  };
-
-  // Prepare data for Bar chart (Income by category)
-  const incomeCategories = filteredIncomes.reduce((acc, income) => {
-    acc[income.incomeCategory] = (acc[income.incomeCategory] || 0) + income.amount;
-    return acc;
-  }, {});
-
-  const barChartData = {
-    labels: Object.keys(incomeCategories),
-    datasets: [
-      {
-        label: 'Income by Category',
-        data: Object.values(incomeCategories),
-        backgroundColor: '#36A2EB',
-        borderColor: '#36A2EB',
-        borderWidth: 1,
-      },
-    ],
-  };
 
   const formatNumbers = (x) => {
     return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
@@ -177,8 +145,6 @@ const IncomeList = () => {
 
   // Calculate total income from filtered incomes
   const totalIncome = filteredIncomes.reduce((sum, income) => sum + income.amount, 0);
-
-
 
 
   return (
