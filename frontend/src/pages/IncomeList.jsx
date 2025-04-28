@@ -96,6 +96,13 @@ const IncomeList = () => {
   
 
   const handleUpdate = async (id) => {
+    // Phone number must be exactly 10 digits before saving
+    const phoneValue = editedIncome[id]?.phone || '';
+    if (phoneValue.length !== 10) {
+      toast.error("Phone number must be exactly 10 digits.");
+      return;
+    }
+  
     const { _id, date, ...payload } = editedIncome[id];
     try {
       const response = await fetch(`${API_URL}/incomes/${id}`, {
@@ -115,6 +122,7 @@ const IncomeList = () => {
       toast.error("Error updating income.");
     }
   };
+  
 
   // Function to download PDF 
   const downloadPDF = () => {
