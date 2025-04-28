@@ -78,6 +78,7 @@ const BudgetPage = () => {
       bodyStyles: { fillColor: [240, 240, 240] },
     });
   
+    
     doc.save(fileName);
   };
 
