@@ -58,14 +58,26 @@ const IncomeList = () => {
   };
 
   const handleEditChange = (id, field, value) => {
-    // Check if the amount is a valid number greater than 0
+    // Validate amount: must be a number and > 0
     if (field === "amount") {
+      if (isNaN(value)) {
+        toast.error("Amount must be a number");
+        return;
+      }
       if (value <= 0) {
         toast.warning("Amount must be greater than 0");
         return;
       }
     }
-
+  
+    // Validate phone: only digits (Updated)
+    if (field === "phone") {
+      if (!/^\d*$/.test(value)) {
+        toast.error("Phone number must contain only numbers.");
+        return;
+      }
+    }
+  
     // Validate date: can't be a future date
     if (field === "date") {
       const today = new Date().toISOString().split("T")[0];
@@ -74,12 +86,14 @@ const IncomeList = () => {
         return;
       }
     }
-
+  
+    // If all validations pass, update editedIncome state
     setEditedIncome((prev) => ({
       ...prev,
       [id]: { ...prev[id], [field]: value },
     }));
   };
+  
 
   const handleUpdate = async (id) => {
     const { _id, date, ...payload } = editedIncome[id];
