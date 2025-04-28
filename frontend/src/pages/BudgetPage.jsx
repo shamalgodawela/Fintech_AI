@@ -44,7 +44,7 @@ const BudgetPage = () => {
   };
 
 
-  //sadfdghjkjhgj
+  //
 
   const filteredBudgets = budgets.filter((budget) =>
     budget.category.toLowerCase().includes(searchQuery.toLowerCase())

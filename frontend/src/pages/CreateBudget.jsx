@@ -29,14 +29,15 @@ const CreateBudget = () => {
 
   const validateForm = () => {
     const newErrors = {};
-    const today = new Date().toISOString().split("T")[0];
+    const today = new Date().toISOString().split("T")[0]; // Get today's date in YYYY-MM-DD format
 
     if (!formData.amount) newErrors.amount = "Amount is required";
     if (!formData.notes) newErrors.notes = "Notes are required";
     if (!formData.startDate) newErrors.startDate = "Start date is required";
 
-    if (formData.startDate && formData.startDate >= today) {
-      newErrors.startDate = "Start date must be before today";
+    // Ensure start date is today or earlier
+    if (formData.startDate && formData.startDate > today) {
+      newErrors.startDate = "Start date must be today or in the past";
     }
 
     setErrors(newErrors);
