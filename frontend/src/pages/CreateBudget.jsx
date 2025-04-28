@@ -171,6 +171,7 @@ const CreateBudget = () => {
                 max={new Date().toISOString().split("T")[0]} // Prevent selecting today or future dates
                 className="mt-1 block w-full px-3 py-2 bg-gray-800 text-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
               />
+              
               {errors.startDate && <p className="text-red-500 text-sm">{errors.startDate}</p>}
             </div>
 
