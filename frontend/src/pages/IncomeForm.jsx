@@ -135,9 +135,10 @@ const IncomeForm = ({ onIncomeAdded = () => {} }) => {
               required
             >
               <option value="">Select type</option>
-              <option value="Monthly">Monthly</option>
               <option value="one-time">One-time</option>
-              <option value="Yealy">Yealy</option>
+              <option value="Weekly">Weekly</option>
+              <option value="Monthly">Monthly</option>
+              <option value="Annually">Annualy</option>
             </select>
           </div>
 
