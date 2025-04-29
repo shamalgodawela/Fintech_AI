@@ -18,13 +18,13 @@ export default function Login() {
         password,
       });
 
-      // Store token in localStorage
+   
       localStorage.setItem("token", response.data.token);
 
-      // Redirect to Dashboard
+    
       navigate("/Dashboard");
     } catch (err) {
-      // Show error message as a toast notification
+     
       toast.error(err.response?.data?.message || "Login failed! Please try again.", {
         position: "top-right",
         autoClose: 3000,
@@ -85,7 +85,7 @@ export default function Login() {
         </div>
       </div>
 
-      {/* Toast Notification Container */}
+     
       <ToastContainer />
     </div>
   );

@@ -58,7 +58,7 @@ const Welcome = () => {
           <p className="text-sm">Categorize and control your expenses effectively.</p>
         </motion.div>
 
-        {/* AI Budget Prediction */}
+      
         <motion.div 
           className="p-6 rounded-2xl bg-white bg-opacity-20 backdrop-blur-lg shadow-lg text-white text-center transition-transform transform hover:scale-105 col-span-1 md:col-span-3"
           initial={{ opacity: 0, y: 30 }}

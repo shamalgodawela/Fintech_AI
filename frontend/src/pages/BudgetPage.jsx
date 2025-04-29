@@ -7,7 +7,7 @@ import BudgetSideBar from "../Components/BudgetSideBar";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-
+//home budget
 
 const BudgetPage = () => {
   const [budgets, setBudgets] = useState([]);
