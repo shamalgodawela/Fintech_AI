@@ -29,14 +29,15 @@ const CreateBudget = () => {
 
   const validateForm = () => {
     const newErrors = {};
-    const today = new Date().toISOString().split("T")[0];
+    const today = new Date().toISOString().split("T")[0]; // Get today's date in YYYY-MM-DD format
 
     if (!formData.amount) newErrors.amount = "Amount is required";
     if (!formData.notes) newErrors.notes = "Notes are required";
     if (!formData.startDate) newErrors.startDate = "Start date is required";
 
-    if (formData.startDate && formData.startDate >= today) {
-      newErrors.startDate = "Start date must be before today";
+    // Ensure start date is today or earlier
+    if (formData.startDate && formData.startDate > today) {
+      newErrors.startDate = "Start date must be today or in the past";
     }
 
     setErrors(newErrors);
@@ -170,6 +171,7 @@ const CreateBudget = () => {
                 max={new Date().toISOString().split("T")[0]} // Prevent selecting today or future dates
                 className="mt-1 block w-full px-3 py-2 bg-gray-800 text-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
               />
+              
               {errors.startDate && <p className="text-red-500 text-sm">{errors.startDate}</p>}
             </div>
 
@@ -222,3 +224,4 @@ const CreateBudget = () => {
 };
 
 export default CreateBudget;
+
