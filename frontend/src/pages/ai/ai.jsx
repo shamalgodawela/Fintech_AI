@@ -18,7 +18,7 @@ const Ai = () => {
   const currentMonth = currentDate.getMonth();
   const currentYear = currentDate.getFullYear();
 
-  // Fetch expenses data from the API
+  // Fetch expenses data 
   useEffect(() => {
     const fetchExpenses = async () => {
       setIsLoading(true);
