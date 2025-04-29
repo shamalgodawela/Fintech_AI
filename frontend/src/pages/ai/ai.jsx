@@ -13,7 +13,7 @@ const Ai = () => {
   const [error, setError] = useState('');
   const [budgetSuggestion, setBudgetSuggestion] = useState(0);
 
-  // Get the current date
+  // Get the current 
   const currentDate = new Date();
   const currentMonth = currentDate.getMonth();
   const currentYear = currentDate.getFullYear();
