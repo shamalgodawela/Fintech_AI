@@ -36,7 +36,7 @@ const Ai = () => {
     fetchExpenses();
   }, []);
 
-  // Helper function to calculate total amount for a given month
+  // Helper function to 
   const getMonthTotal = (month, year) => {
     return expenses
       .filter(exp => {
