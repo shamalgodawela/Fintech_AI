@@ -261,24 +261,24 @@ const IncomeDashboard = () => {
           <p className="text-center text-3xl text-green-500 font-semibold mt-4">Rs:{formatNumbers(totalIncome.toFixed(2))}</p>
         </div>
         
-        <div className=" bg-slate-600  rounded-xl p-4 ">
+        <div className=" bg-transparent  rounded-xl p-4 fle">
         {/* Charts Section: Pie chart and Bar chart side by side */}
         <div className="flex flex-wrap gap-4 mb-8 justify-center">
           {/* Pie Chart */}
-          <div className="w-[30%] min-w-[300px]">
+          <div className="w-[30%] min-w-[300px] shadow-lg rounded-xl p-6 mb-8  bg-slate-600">
             <h3 className="text-xl font-bold text-center mb-2 text-black">Total Income by Type</h3>
             <Pie data={pieChartData} ref={pieChartRef} />
           </div>
 
           {/* Bar Chart */}
-          <div className="w-[48%] min-w-[300px]">
+          <div className="w-[48%] min-w-[300px] shadow-lg rounded-xl p-6 mb-8  bg-slate-600">
             <h3 className="text-xl font-bold text-center mb-2 text-black">Total Income by Category</h3>
             <Bar data={barChartData} ref={barChartRef} />
           </div>
         </div>
 
         {/* New Line Chart Section: Income by Source */}
-        <div className="max-w-md mx-auto shadow-lg rounded-xl p-6 mb-8 bg-white">
+        <div className="max-w-md mx-auto shadow-lg rounded-xl p-6 mb-8  bg-slate-600 ">
           <h3 className="text-2xl font-bold text-center mb-4">Income by Source</h3>
           <Line data={lineChartData} />
         </div>
@@ -322,61 +322,7 @@ const IncomeDashboard = () => {
           </div>
         </div>
 
-        {/* Income List Table (Hidden) */}
-        <div className="hidden overflow-x-auto shadow-md rounded-lg">
-          <table className="w-full bg-white border border-gray-200">
-            <thead className="bg-gray-400 text-slate-950">
-              <tr>
-                {['Income Source', 'Category', 'Type', 'Amount', 'Description', 'Date', 'Actions'].map((header) => (
-                  <th key={header} className="py-3 px-4 border-b text-center">{header}</th>
-                ))}
-              </tr>
-            </thead>
-            <tbody>
-              {filteredIncomes.map((income) => (
-                <tr key={income._id} className="text-center border-b hover:bg-gray-50 transition">
-                  {editingRow === income._id ? (
-                    <>
-                      {['incomeSource', 'incomeCategory', 'incomeType', 'amount', 'description'].map((field) => (
-                        <td key={field} className="py-2 px-4 border-b">
-                          <input
-                            type={field === 'amount' ? 'number' : 'text'}
-                            value={editedIncome[income._id]?.[field] || ''}
-                            onChange={(e) => handleEditChange(income._id, field, e.target.value)}
-                            className="border rounded-md p-2 w-full focus:ring focus:ring-blue-300"
-                          />
-                        </td>
-                      ))}
-                      <td className="py-2 px-4 border-b">{new Date(income.date).toLocaleDateString()}</td>
-                      <td className="py-2 px-4 border-b space-x-2 flex justify-center">
-                        <button onClick={() => handleUpdate(income._id)} className="text-green-500 hover:text-green-700 flex items-center gap-1">
-                          <FaSave /> Save
-                        </button>
-                      </td>
-                    </>
-                  ) : (
-                    <>
-                      <td className="py-2 px-4 border-b">{income.incomeSource}</td>
-                      <td className="py-2 px-4 border-b">{income.incomeCategory}</td>
-                      <td className="py-2 px-4 border-b">{income.incomeType}</td>
-                      <td className="py-2 px-4 border-b font-semibold text-green-600">${income.amount}</td>
-                      <td className="py-2 px-4 border-b">{income.description}</td>
-                      <td className="py-2 px-4 border-b">{new Date(income.date).toLocaleDateString()}</td>
-                      <td className="py-2 px-4 border-b flex justify-center space-x-4">
-                        <button onClick={() => handleEditClick(income._id)} className="text-blue-500 hover:text-blue-700 flex items-center gap-1">
-                          <FaEdit />
-                        </button>
-                        <button onClick={() => handleDelete(income._id)} className="text-red-500 hover:text-red-700 flex items-center gap-1">
-                          <FaTrash />
-                        </button>
-                      </td>
-                    </>
-                  )}
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
+       
 
       </div>
     </div>

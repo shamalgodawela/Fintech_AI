@@ -40,6 +40,8 @@ const IncomeList = () => {
   
     };
 
+    
+
   const handleDelete = async (id) => {
     if (window.confirm("Are you sure you want to delete this income entry?")) {
       try {
@@ -56,14 +58,26 @@ const IncomeList = () => {
   };
 
   const handleEditChange = (id, field, value) => {
-    // Check if the amount is a valid number greater than 0
+    // Validate amount: must be a number and > 0
     if (field === "amount") {
+      if (isNaN(value)) {
+        toast.error("Amount must be a number");
+        return;
+      }
       if (value <= 0) {
         toast.warning("Amount must be greater than 0");
         return;
       }
     }
-
+  
+    // Validate phone: only digits (Updated)
+    if (field === "phone") {
+      if (!/^\d*$/.test(value)) {
+        toast.error("Phone number must contain only numbers.");
+        return;
+      }
+    }
+  
     // Validate date: can't be a future date
     if (field === "date") {
       const today = new Date().toISOString().split("T")[0];
@@ -72,14 +86,23 @@ const IncomeList = () => {
         return;
       }
     }
-
+  
+    // If all validations pass, update editedIncome state
     setEditedIncome((prev) => ({
       ...prev,
       [id]: { ...prev[id], [field]: value },
     }));
   };
+  
 
   const handleUpdate = async (id) => {
+    // Phone number must be exactly 10 digits before saving
+    const phoneValue = editedIncome[id]?.phone || '';
+    if (phoneValue.length !== 10) {
+      toast.error("Phone number must be exactly 10 digits.");
+      return;
+    }
+  
     const { _id, date, ...payload } = editedIncome[id];
     try {
       const response = await fetch(`${API_URL}/incomes/${id}`, {
@@ -99,6 +122,7 @@ const IncomeList = () => {
       toast.error("Error updating income.");
     }
   };
+  
 
   // Function to download PDF 
   const downloadPDF = () => {
@@ -136,40 +160,6 @@ const IncomeList = () => {
     })
   );
 
-  // Prepare data for Pie chart (Total income by income type)
-  const incomeTypes = filteredIncomes.reduce((acc, income) => {
-    acc[income.incomeType] = (acc[income.incomeType] || 0) + income.amount;
-    return acc;
-  }, {});
-
-  const pieChartData = {
-    labels: Object.keys(incomeTypes),
-    datasets: [
-      {
-        data: Object.values(incomeTypes),
-        backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0', '#9966FF'],
-      },
-    ],
-  };
-
-  // Prepare data for Bar chart (Income by category)
-  const incomeCategories = filteredIncomes.reduce((acc, income) => {
-    acc[income.incomeCategory] = (acc[income.incomeCategory] || 0) + income.amount;
-    return acc;
-  }, {});
-
-  const barChartData = {
-    labels: Object.keys(incomeCategories),
-    datasets: [
-      {
-        label: 'Income by Category',
-        data: Object.values(incomeCategories),
-        backgroundColor: '#36A2EB',
-        borderColor: '#36A2EB',
-        borderWidth: 1,
-      },
-    ],
-  };
 
   const formatNumbers = (x) => {
     return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
@@ -177,8 +167,6 @@ const IncomeList = () => {
 
   // Calculate total income from filtered incomes
   const totalIncome = filteredIncomes.reduce((sum, income) => sum + income.amount, 0);
-
-
 
 
   return (
@@ -230,12 +218,12 @@ const IncomeList = () => {
                           className="border rounded-md p-2 w-full focus:ring focus:ring-blue-300"
                         >
                           <option value="">Select income source</option>
-                          <option value="product_sales">Product Sales</option>
-                          <option value="service_revenue">Service Revenue</option>
-                          <option value="investments">Investments</option>
-                          <option value="rental_income">Rental Income</option>
-                          <option value="royalties">Royalties</option>
-                          <option value="other">Other</option>
+                          <option value="Product Sales">Product Sales</option>
+                          <option value="Service Revenue">Service Revenue</option>
+                          <option value="Investments">Investments</option>
+                          <option value="Rental Income">Rental Income</option>
+                          <option value="Royalties">Royalties</option>
+                          <option value="Other">Other</option>
                         </select>
                       </td>
                       <td className="py-2 px-4 border-b">
@@ -261,7 +249,9 @@ const IncomeList = () => {
                         >
                           <option value="">Select type</option>
                           <option value="one-time">One-time</option>
-                          <option value="recurring">Recurring</option>
+                          <option value="Weekly">Weekly</option>
+                          <option value="Monthly">Monthly</option>
+                          <option value="Annually">Annualy</option> 
                         </select>
                       </td>
                       <td className="py-2 px-4 border-b">
