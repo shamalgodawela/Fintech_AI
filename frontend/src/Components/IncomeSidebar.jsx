@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-const ExepenseSidebar = () => {
+const SideBar = () => {
   const [isActive, setIsActive] = useState(false);
 
   const toggleSidebar = () => {
@@ -22,80 +22,74 @@ const ExepenseSidebar = () => {
             alt="profile_picture"
           />
           <h3 className="text-white mt-4">Fintech</h3>
-          <p className="text-[#c0f0fd] text-sm">Income Management</p>
+          <p className="text-[#c0f0fd] text-sm">Finance Application</p>
           <p className="text-[#c0f0fd] text-sm">Management Categories</p>
         </div>
         <ul>
           <li>
             <a
-             
+              href="#"
               className="block py-3 px-7 text-white text-lg border-b border-[#10558d] hover:bg-white hover:text-[#0c7db1]"
             >
               <span className="icon inline-block w-7 text-[#dee4ec]">
                 <i className="fas fa-home"></i>
               </span>
-              <span className="item">
-                <a href='/Dashboard'>Go Home</a>
-              </span>
+              <span className="item">Dashboard</span>
             </a>
           </li>
           <li>
             <a
-              
+              href="#"
               className="block py-3 px-7 text-white text-lg border-b border-[#10558d] hover:bg-white hover:text-[#0c7db1]"
             >
               <span className="icon inline-block w-7 text-[#dee4ec]">
                 <i className="fas fa-home"></i>
               </span>
-              <span className="item">
-                <a href='/income_dashboard'>Dashboard</a>
-              </span>
+              <span className="item text-center"><a href='/Dashboard-Expenses'>Expenses</a></span>
             </a>
           </li>
           <li>
             <a
-             
+              href="/income_dashboard"
               className="block py-3 px-7 text-white text-lg border-b border-[#10558d] hover:bg-white hover:text-[#0c7db1]"
             >
               <span className="icon inline-block w-7 text-[#dee4ec]">
                 <i className="fas fa-home"></i>
               </span>
-              <span className="item">
-                <a href='/income_form'>Add Income</a>
-              </span>
+              <span className="item text-center">Income </span>
             </a>
           </li>
           <li>
             <a
-              
+              href="/BudgetHome"
               className="block py-3 px-7 text-white text-lg border-b border-[#10558d] hover:bg-white hover:text-[#0c7db1]"
             >
               <span className="icon inline-block w-7 text-[#dee4ec]">
                 <i className="fas fa-home"></i>
               </span>
-              <span className="item">
-                <a href='/income_list'>All Details</a>
-              </span>
+              <span className="item text-center">Budget</span>
             </a>
           </li>
           <li>
             <a
-              
-              className="block py-3 px-7 text-white text-lg border-b border-[#10558d] hover:bg-white hover:text-[#0c7db1]"
+              href="/unlock"
+              className="block py-3 px-7 text-white text-lg border-b border-[#41494f] hover:bg-white hover:text-[#0c7db1]"
             >
               <span className="icon inline-block w-7 text-[#dee4ec]">
                 <i className="fas fa-home"></i>
               </span>
-              <span className="item text-center">
-                <a href='/income_reports'>Reports</a>
-              </span>
+              <span className="item text-center">Fintech AI</span>
             </a>
           </li>
+         
         </ul>
       </div>
 
+      {/* Main Content */}
       <div className="flex-1">
+        {/* Top Navbar */}
         <div className="flex items-center justify-between bg-[#070c21] p-5">
+          {/* Toggle Button */}
           <button
             onClick={toggleSidebar}
             style={{
@@ -104,15 +98,18 @@ const ExepenseSidebar = () => {
               fontSize: '30px',
               color: '#fff',
               cursor: 'pointer',
-              zIndex: 10,
+              zIndex: 10
             }}
           >
-            {isActive ? '☰' : 'X' }
+            ☰ {/* Simple hamburger button using Unicode */}
           </button>
         </div>
+
+        {/* Content */}
+        
       </div>
     </div>
   );
 };
 
-export default ExepenseSidebar;
+export default SideBar;
