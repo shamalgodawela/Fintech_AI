@@ -6,7 +6,7 @@ import Loader from '../Components/Loader';
 import ExepenseSidebar from '../Components/ExepenseSidebar';
 import { FaEdit, FaEye, FaTrash } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
-
+//expense table
 const ExpensesTable = () => {
   const [expenses, setExpenses] = useState([]);
   const [isLoading, setIsLoading] = useState(false);

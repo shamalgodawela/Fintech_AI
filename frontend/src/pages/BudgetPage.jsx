@@ -8,7 +8,6 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 
-//add  
 const BudgetPage = () => {
   const [budgets, setBudgets] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");

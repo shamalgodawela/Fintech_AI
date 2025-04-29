@@ -2,7 +2,7 @@ import React from 'react';
 import ExepenseSidebar from '../Components/ExepenseSidebar';
 import MonthlyExpensesChart from '../Components/MonthlyExpensesChart';
 import CategoryWiseExpensesChart from '../Components/CategoryWiseExpensesChart';
-
+//exedash
 const ExpensesDash = () => {
     return (
         <div className="bg-gradient-to-r from-[#434570] to-[#232439] h-screen w-full">
