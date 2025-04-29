@@ -7,7 +7,6 @@ import BudgetSideBar from "../Components/BudgetSideBar";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-//home budget
 
 const BudgetPage = () => {
   const [budgets, setBudgets] = useState([]);
@@ -43,6 +42,9 @@ const BudgetPage = () => {
     navigate(`/edit-budget/${id}`);
   };
 
+
+  //
+
   const filteredBudgets = budgets.filter((budget) =>
     budget.category.toLowerCase().includes(searchQuery.toLowerCase())
   );
@@ -75,6 +77,7 @@ const BudgetPage = () => {
       bodyStyles: { fillColor: [240, 240, 240] },
     });
   
+
     doc.save(fileName);
   };
 
@@ -128,6 +131,7 @@ const BudgetPage = () => {
                 <th className="px-4 py-2">Phone</th>
                 <th className="px-4 py-2">Actions</th>
               </tr>
+              
             </thead>
             <tbody>
               {filteredBudgets.map((budget) => (
