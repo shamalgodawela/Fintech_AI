@@ -194,14 +194,18 @@ const IncomeDashboard = () => {
             <Bar data={barChartData} ref={barChartRef} />
           </div>
         </div>
-        <div className="max-w-md mx-auto shadow-lg rounded-xl p-6 mb-8 bg-slate-600">
-          <h3 className="text-2xl font-bold text-center mb-4">Income by Source</h3>
-          <Line data={lineChartData} />
+
+        <div className="flex flex-wrap gap-4 mb-8 justify-center">
+            <div className="max-w-md mx-auto shadow-lg rounded-xl p-6 mb-8 bg-slate-600">
+              <h3 className="text-2xl font-bold text-center mb-4">Income by Source</h3>
+              <Line data={lineChartData} />
+            </div>
+            <div className="max-w-md mx-auto shadow-lg rounded-xl p-6 mb-8 bg-slate-600">
+              <h3 className="text-2xl font-bold text-center mb-4">Monthly Income Trend</h3>
+              <Line data={monthlyChartData} />
+            </div>
         </div>
-        <div className="max-w-md mx-auto shadow-lg rounded-xl p-6 mb-8 bg-slate-600">
-          <h3 className="text-2xl font-bold text-center mb-4">Monthly Income Trend</h3>
-          <Line data={monthlyChartData} />
-        </div>
+
         <div className="max-w-full mx-auto shadow-lg bg-slate-600 rounded-xl p-6 mb-8 mt-6">
           <h3 className="text-2xl font-bold text-center text-black mb-4">Income Summary</h3>
           <div className="flex flex-col md:flex-row justify-between">
