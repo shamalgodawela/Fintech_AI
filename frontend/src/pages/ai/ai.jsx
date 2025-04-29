@@ -13,12 +13,12 @@ const Ai = () => {
   const [error, setError] = useState('');
   const [budgetSuggestion, setBudgetSuggestion] = useState(0);
 
-  // Get the current date
+  // Get the current 
   const currentDate = new Date();
   const currentMonth = currentDate.getMonth();
   const currentYear = currentDate.getFullYear();
 
-  // Fetch expenses data from the API
+  // Fetch expenses data 
   useEffect(() => {
     const fetchExpenses = async () => {
       setIsLoading(true);
@@ -36,7 +36,7 @@ const Ai = () => {
     fetchExpenses();
   }, []);
 
-  // Helper function to calculate total amount for a given month
+  // Helper function 
   const getMonthTotal = (month, year) => {
     return expenses
       .filter(exp => {
