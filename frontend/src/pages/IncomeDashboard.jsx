@@ -34,6 +34,15 @@ ChartJS.register(
   Filler
 );
 
+// Set all chart text to white
+ChartJS.defaults.color = '#fff';
+ChartJS.defaults.plugins.legend.labels.color = '#fff';
+ChartJS.defaults.plugins.title.color = '#fff';
+ChartJS.defaults.plugins.tooltip.titleColor = '#fff';
+ChartJS.defaults.plugins.tooltip.bodyColor = '#fff';
+ChartJS.defaults.scales.category.ticks.color = '#fff';
+ChartJS.defaults.scales.linear.ticks.color = '#fff';
+
 const IncomeDashboard = () => {
   const [incomes, setIncomes] = useState([]);
   const [editedIncome, setEditedIncome] = useState({});
