@@ -199,6 +199,7 @@ const UpdateBudget = () => {
               {errors.responsiblePerson && <p className="text-red-500 text-sm">{errors.responsiblePerson}</p>}
             </div>
 
+
             <div className="mb-4">
               <label className="block text-sm font-medium text-gray-300">Phone Number</label>
               <input
@@ -211,11 +212,13 @@ const UpdateBudget = () => {
               {errors.phone && <p className="text-red-500 text-sm">{errors.phone}</p>}
             </div>
 
+
             <button
               type="submit"
               className="w-full bg-indigo-600 text-white py-2 px-4 rounded-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500"
             >
               Update Budget
+              
               
             </button>
           </form>
