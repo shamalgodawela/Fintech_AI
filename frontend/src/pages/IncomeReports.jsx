@@ -144,7 +144,7 @@ const IncomeReports = () => {
               Analyzed Report
             </h3>
             <p className="text-black mb-4">
-              Get a report including Total Income, Charts, and Income Summary.
+              Get a report including Total Income, Charts, and Income Summary as a pdf
             </p>
             <button
               onClick={downloadAnalyzedReportPDF}
