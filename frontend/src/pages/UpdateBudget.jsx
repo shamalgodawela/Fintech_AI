@@ -145,6 +145,7 @@ const UpdateBudget = () => {
               {errors.amount && <p className="text-red-500 text-sm">{errors.amount}</p>}
             </div>
 
+
             <div className="mb-4">
               <label className="block text-sm font-medium text-white">Category</label>
               <select
@@ -219,7 +220,7 @@ const UpdateBudget = () => {
             >
               Update Budget
               
-              
+
             </button>
           </form>
         </div>
