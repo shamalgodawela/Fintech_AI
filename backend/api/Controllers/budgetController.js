@@ -22,7 +22,6 @@ const getAllBudgets = async (req, res) => {
 };
 
 
-
 // Get a budget by ID
 const getBudgetById = async (req, res) => {
   try {
