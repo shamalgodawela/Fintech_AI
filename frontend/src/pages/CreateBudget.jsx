@@ -132,6 +132,7 @@ const CreateBudget = () => {
               <label className="block text-sm font-medium text-gray-300">
                 Category
               </label>
+              
               <select
                 name="category"
                 value={formData.category}
