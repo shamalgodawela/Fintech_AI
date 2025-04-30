@@ -116,12 +116,12 @@ const IncomeForm = ({ onIncomeAdded = () => {} }) => {
               required
             >
               <option value="">Select income source</option>
-              <option value="product_sales">Product Sales</option>
-              <option value="service_revenue">Service Revenue</option>
-              <option value="investments">Investments</option>
-              <option value="rental_income">Rental Income</option>
-              <option value="royalties">Royalties</option>
-              <option value="other">Other</option>
+              <option value="Product Sales">Product Sales</option>
+              <option value="Service Revenue">Service Revenue</option>
+              <option value="Investments">Investments</option>
+              <option value="Rental Income">Rental Income</option>
+              <option value="Royalties">Royalties</option>
+              <option value="Other">Other</option>
             </select>
           </div>
 
@@ -135,9 +135,10 @@ const IncomeForm = ({ onIncomeAdded = () => {} }) => {
               required
             >
               <option value="">Select type</option>
-              <option value="Monthly">Monthly</option>
               <option value="one-time">One-time</option>
-              <option value="Yealy">Yealy</option>
+              <option value="Weekly">Weekly</option>
+              <option value="Monthly">Monthly</option>
+              <option value="Annually">Annualy</option>
             </select>
           </div>
 
