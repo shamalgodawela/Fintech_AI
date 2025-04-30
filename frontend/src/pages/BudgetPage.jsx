@@ -120,6 +120,7 @@ const BudgetPage = () => {
           />
         </div>
 
+
         <div className="overflow-x-auto">
           <table className="min-w-full bg-gray-900 text-white border border-gray-700  ">
             <thead>
@@ -132,6 +133,7 @@ const BudgetPage = () => {
                 <th className="px-4 py-2">Phone</th>
                 <th className="px-4 py-2">Actions</th>
               </tr>
+        
               
             </thead>
             <tbody>
