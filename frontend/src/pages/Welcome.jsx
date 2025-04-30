@@ -25,7 +25,7 @@ const Welcome = () => {
       </motion.h1>
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-8 w-full max-w-6xl ml-[250px] mr-[100px] mt-[100px]">
-        {/* Budget Management */}
+     
         <motion.div 
           className="p-6 rounded-2xl bg-white bg-opacity-20 backdrop-blur-lg shadow-lg text-white text-center transition-transform transform hover:scale-105"
           initial={{ opacity: 0, y: 30 }}
