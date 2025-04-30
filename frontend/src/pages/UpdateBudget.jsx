@@ -127,6 +127,7 @@ const UpdateBudget = () => {
   };
 
   return (
+    
     <div className="bg-gradient-to-r from-[#434570] to-[#232439] h-screen w-full">
       <BudgetSideBar />
       <div className="bg-gradient-to-r from-[#434570] to-[#232439] min-h-screen w-full flex flex-col justify-start items-center py-10">
