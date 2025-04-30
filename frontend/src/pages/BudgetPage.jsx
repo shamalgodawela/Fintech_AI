@@ -163,12 +163,14 @@ const BudgetPage = () => {
         </div>
       </div>
        <ToastContainer 
+
               position="top-center" 
               autoClose={5000} 
               hideProgressBar
               closeButton={false}
               toastClassName="custom-toast"  
             />
+            
     </div>
   );
 };
