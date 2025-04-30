@@ -3,6 +3,9 @@ import React, { useEffect, useState, useRef } from "react";
 import { jsPDF } from "jspdf";
 import "jspdf-autotable";
 import { Pie, Bar } from "react-chartjs-2";
+import html2canvas from "html2canvas";
+import * as XLSX from "xlsx";
+import IncomeSidebar from "../Components/IncomeSidebar";
 import {
   Chart as ChartJS,
   Title,
@@ -13,12 +16,16 @@ import {
   LinearScale,
   BarElement,
 } from "chart.js";
-import html2canvas from "html2canvas";
-import * as XLSX from "xlsx";
-import IncomeSidebar  from "../Components/IncomeSidebar";
 
-// Register necessary Chart.js components
-ChartJS.register(Title, Tooltip, Legend, ArcElement, CategoryScale, LinearScale, BarElement);
+ChartJS.register(
+  Title,
+  Tooltip,
+  Legend,
+  ArcElement,
+  CategoryScale,
+  LinearScale,
+  BarElement
+);
 
 const IncomeReports = () => {
   const [incomes, setIncomes] = useState([]);
@@ -32,25 +39,23 @@ const IncomeReports = () => {
 
   const fetchIncomes = () => {
     fetch(`${API_URL}/incomes`)
-      .then((response) => response.json())
+      .then((res) => res.json())
       .then((data) => setIncomes(data))
-      .catch((error) => console.error("Error fetching incomes:", error));
+      .catch((err) => console.error("Error fetching incomes:", err));
   };
 
-  // Calculate totals and aggregates
-  const totalIncome = incomes.reduce((sum, income) => sum + income.amount, 0);
-
-  const aggregatedTypes = incomes.reduce((acc, income) => {
-    acc[income.incomeType] = (acc[income.incomeType] || 0) + income.amount;
+  // Totals and aggregates
+  const totalIncome = incomes.reduce((sum, inc) => sum + inc.amount, 0);
+  const aggregatedTypes = incomes.reduce((acc, inc) => {
+    acc[inc.incomeType] = (acc[inc.incomeType] || 0) + inc.amount;
+    return acc;
+  }, {});
+  const aggregatedCategories = incomes.reduce((acc, inc) => {
+    acc[inc.incomeCategory] = (acc[inc.incomeCategory] || 0) + inc.amount;
     return acc;
   }, {});
 
-  const aggregatedCategories = incomes.reduce((acc, income) => {
-    acc[income.incomeCategory] = (acc[income.incomeCategory] || 0) + income.amount;
-    return acc;
-  }, {});
-
-  // Chart Data for the analyzed report
+  // Chart data
   const pieChartData = {
     labels: Object.keys(aggregatedTypes),
     datasets: [
@@ -60,7 +65,6 @@ const IncomeReports = () => {
       },
     ],
   };
-
   const barChartData = {
     labels: Object.keys(aggregatedCategories),
     datasets: [
@@ -74,8 +78,7 @@ const IncomeReports = () => {
     ],
   };
 
-  // Function to download the Analyzed Report as a PDF.
-  // It captures a hidden container that includes Total Income, Charts, and Income Summary.
+  // Download analyzed report via html2canvas + jsPDF
   const downloadAnalyzedReportPDF = () => {
     const input = document.getElementById("analyzed-report");
     html2canvas(input, { scale: 2 }).then((canvas) => {
@@ -88,165 +91,169 @@ const IncomeReports = () => {
     });
   };
 
-  // Function to download the Full Details Report as a PDF using autoTable.
+  // Download full details PDF
   const downloadFullDetailsReportPDF = () => {
     const pdf = new jsPDF();
-    const columns = ["Income Source", "Category", "Type", "Amount", "Description", "Date"];
-    const rows = incomes.map((income) => [
-      income.incomeSource,
-      income.incomeCategory,
-      income.incomeType,
-      `$${income.amount}`,
-      income.description,
-      new Date(income.date).toLocaleDateString(),
+    const columns = [
+      "Income Source",
+      "Category",
+      "Type",
+      "Amount",
+      "Description",
+      "Date",
+    ];
+    const rows = incomes.map((inc) => [
+      inc.incomeSource,
+      inc.incomeCategory,
+      inc.incomeType,
+      `Rs:${inc.amount}`,
+      inc.description,
+      new Date(inc.date).toLocaleDateString(),
     ]);
-    pdf.autoTable({
-      head: [columns],
-      body: rows,
-    });
+    pdf.autoTable({ head: [columns], body: rows });
     pdf.save("full-details-report.pdf");
   };
 
-  // Function to download the Full Details Report as an Excel file using XLSX.
+  // Download full details Excel
   const downloadFullDetailsReportExcel = () => {
-    const worksheetData = incomes.map((income) => ({
-      "Income Source": income.incomeSource,
-      Category: income.incomeCategory,
-      Type: income.incomeType,
-      Amount: income.amount,
-      Description: income.description,
-      Date: new Date(income.date).toLocaleDateString(),
+    const wsData = incomes.map((inc) => ({
+      "Income Source": inc.incomeSource,
+      Category: inc.incomeCategory,
+      Type: inc.incomeType,
+      Amount: inc.amount,
+      Description: inc.description,
+      Date: new Date(inc.date).toLocaleDateString(),
     }));
-    const worksheet = XLSX.utils.json_to_sheet(worksheetData);
-    const workbook = XLSX.utils.book_new();
-    XLSX.utils.book_append_sheet(workbook, worksheet, "Incomes");
-    XLSX.writeFile(workbook, "full-details-report.xlsx");
+    const ws = XLSX.utils.json_to_sheet(wsData);
+    const wb = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, ws, "Incomes");
+    XLSX.writeFile(wb, "full-details-report.xlsx");
   };
 
   return (
-    <div className="flex justify-center h-screen w-full bg-gradient-to-r from-[#434570] to-[#232439]">
-  {/* Sidebar remains on the left */}
-  <IncomeSidebar />
+    <div className="flex h-screen w-full bg-gradient-to-r from-[#434570] to-[#232439]">
+      <IncomeSidebar />
 
-  {/* Main content container centered */}
-  <div className="flex flex-col items-center justify-center flex-1">
-    <h2 className="text-3xl font-bold text-center text-black mb-8">
-      Income Reports
-    </h2>
+      <div className="flex-1 flex flex-col items-center justify-start p-6 overflow-auto">
+        <h2 className="text-3xl font-bold mb-8 text-white">Income Reports</h2>
 
-    <div className="flex flex-col md:flex-row gap-8">
-      {/* Analyzed Report Button */}
+        <div className="flex flex-col md:flex-row gap-8">
+          {/* Analyzed Report Card */}
+          <div className="m-4 rounded-lg shadow-xl p-6 bg-slate-400">
+            <h3 className="text-xl font-semibold mb-2 text-black">
+              Analyzed Report
+            </h3>
+            <p className="text-black mb-4">
+              Get a report including Total Income, Charts, and Income Summary.
+            </p>
+            <button
+              onClick={downloadAnalyzedReportPDF}
+              className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded shadow transition"
+            >
+              Download
+            </button>
+          </div>
+
+          {/* Full Details Report Card */}
+          <div className="m-4 rounded-lg shadow-xl p-6 bg-slate-400">
+            <h3 className="text-xl font-semibold mb-2 text-black">
+              Full Details Report
+            </h3>
+            <p className="text-black mb-4">
+              Get a full income list report in PDF or Excel format.
+            </p>
+            <div className="flex gap-4">
+              <button
+                onClick={downloadFullDetailsReportPDF}
+                className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded shadow transition"
+              >
+                PDF
+              </button>
+              <button
+                onClick={downloadFullDetailsReportExcel}
+                className="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded shadow transition"
+              >
+                Excel
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Hidden container for Analyzed Report export */}
       <div
-        onClick={downloadAnalyzedReportPDF}
-        className="m-4 rounded-lg shadow-xl p-6 cursor-pointer transform transition duration-300 hover:scale-105 hover:shadow-2xl bg-slate-400 "
+        id="analyzed-report"
+        style={{
+          position: "absolute",
+          top: "-10000px",
+          left: "-10000px",
+          width: "800px",
+        }}
       >
-        <h3 className="text-xl font-semibold mb-2 text-black">
-          Download Analyzed Report
-        </h3>
-        <p className="text-black">
-          Get a report including Total Income, Charts, and Income Summary.
-        </p>
-        
-      </div>
+        <div
+          style={{
+            padding: "20px",
+            border: "1px solid #ccc",
+            marginBottom: "20px",
+            textAlign: "center",
+          }}
+        >
+          <h3 style={{ fontSize: "24px", marginBottom: "10px" }}>
+            Total Income
+          </h3>
+          <p style={{ fontSize: "20px", fontWeight: "bold" }}>
+            Rs {totalIncome.toFixed(2)}
+          </p>
+        </div>
 
-      {/* Full Details Report Button */}
-      <div className="m-4 rounded-lg shadow-xl p-6 cursor-pointer transform transition duration-300 hover:scale-105 hover:shadow-2xl bg-slate-400">
-        <h3 className="text-xl font-semibold mb-2 text-black">
-          Download Full Details Report
-        </h3>
-        <p className="text-black mb-4">
-          Get a full income list report in PDF or Excel format.
-        </p>
-        <div className="flex gap-4">
-          <button
-            onClick={downloadFullDetailsReportPDF}
-            className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded shadow transition"
-          >
-            PDF
-          </button>
-          <button
-            onClick={downloadFullDetailsReportExcel}
-            className="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded shadow transition"
-          >
-            Excel
-          </button>
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "space-around",
+            marginBottom: "20px",
+          }}
+        >
+          <div style={{ width: "300px", height: "300px" }}>
+            <h4 style={{ textAlign: "center" }}>Income by Type</h4>
+            <Pie data={pieChartData} ref={pieChartRef} />
+          </div>
+          <div style={{ width: "300px", height: "300px" }}>
+            <h4 style={{ textAlign: "center" }}>Income by Category</h4>
+            <Bar data={barChartData} ref={barChartRef} />
+          </div>
+        </div>
+
+        <div style={{ padding: "20px", border: "1px solid #ccc" }}>
+          <h3 style={{ fontSize: "20px", marginBottom: "10px" }}>
+            Income Summary
+          </h3>
+          <div style={{ display: "flex", justifyContent: "space-between" }}>
+            <div>
+              <h4>Income Types</h4>
+              <ul>
+                {Object.entries(aggregatedTypes).map(([type, amt]) => (
+                  <li key={type}>
+                    {type}: Rs {amt.toFixed(2)}
+                  </li>
+                ))}
+              </ul>
+            </div>
+            <div>
+              <h4>Income Categories</h4>
+              <ul>
+                {Object.entries(aggregatedCategories).map(
+                  ([cat, amt]) => (
+                    <li key={cat}>
+                      {cat}: Rs {amt.toFixed(2)}
+                    </li>
+                  )
+                )}
+              </ul>
+            </div>
+          </div>
         </div>
       </div>
     </div>
-  </div>
-
-  {/* Hidden container for generating the Analyzed Report */}
-  <div
-    id="analyzed-report"
-    style={{
-      position: "absolute",
-      top: "-10000px",
-      left: "-10000px",
-      width: "800px",
-    }}
-  >
-    {/* Total Income Card */}
-    <div
-      style={{
-        padding: "20px",
-        border: "1px solid #ccc",
-        marginBottom: "20px",
-        textAlign: "center",
-      }}
-    >
-      <h3 style={{ fontSize: "24px", marginBottom: "10px" }}>Total Income</h3>
-      <p style={{ fontSize: "20px", fontWeight: "bold" }}>
-        ${totalIncome.toFixed(2)}
-      </p>
-    </div>
-
-    {/* Charts Section */}
-    <div
-      style={{
-        display: "flex",
-        justifyContent: "space-around",
-        marginBottom: "20px",
-      }}
-    >
-      <div style={{ width: "300px", height: "300px" }}>
-        <h4 style={{ textAlign: "center" }}>Income by Type</h4>
-        <Pie data={pieChartData} ref={pieChartRef} />
-      </div>
-      <div style={{ width: "300px", height: "300px" }}>
-        <h4 style={{ textAlign: "center" }}>Income by Category</h4>
-        <Bar data={barChartData} ref={barChartRef} />
-      </div>
-    </div>
-
-    {/* Income Summary Card */}
-    <div style={{ padding: "20px", border: "1px solid #ccc" }}>
-      <h3 style={{ fontSize: "20px", marginBottom: "10px" }}>Income Summary</h3>
-      <div style={{ display: "flex", justifyContent: "space-between" }}>
-        <div>
-          <h4>Income Types</h4>
-          <ul>
-            {Object.entries(aggregatedTypes).map(([type, amount]) => (
-              <li key={type}>
-                {type}: ${amount.toFixed(2)}
-              </li>
-            ))}
-          </ul>
-        </div>
-        <div>
-          <h4>Income Categories</h4>
-          <ul>
-            {Object.entries(aggregatedCategories).map(([category, amount]) => (
-              <li key={category}>
-                {category}: ${amount.toFixed(2)}
-              </li>
-            ))}
-          </ul>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-
   );
 };
 
