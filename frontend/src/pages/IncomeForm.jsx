@@ -103,7 +103,7 @@ const IncomeForm = ({ onIncomeAdded = () => {} }) => {
 
       {/* Main Content */}
       <div className="flex-1 overflow-auto p-6">
-        <form onSubmit={handleSubmit} className="p-4 border rounded-xl shadow max-w-md mx-auto bg-slate-400 mt-10">
+        <form onSubmit={handleSubmit} className="p-4 border rounded-xl shadow max-w-md mx-auto bg-slate-600 mt-10">
           <h2 className="text-xl font-bold mb-4">Add New Income</h2>
 
           <div className="mb-2">
@@ -135,7 +135,7 @@ const IncomeForm = ({ onIncomeAdded = () => {} }) => {
               required
             >
               <option value="">Select type</option>
-              <option value="one-time">One-time</option>
+              <option value="One-time">One-time</option>
               <option value="Weekly">Weekly</option>
               <option value="Monthly">Monthly</option>
               <option value="Annually">Annualy</option>
@@ -152,11 +152,11 @@ const IncomeForm = ({ onIncomeAdded = () => {} }) => {
               required
             >
               <option value="">Select Category</option>
-              <option value="salary">Salary</option>
-              <option value="freelance">Freelance</option>
-              <option value="investment">Investment</option>
-              <option value="business">Business</option>
-              <option value="other">Other</option>
+              <option value="Salary">Salary</option>
+              <option value="Freelance">Freelance</option>
+              <option value="Investment">Investment</option>
+              <option value="Business">Business</option>
+              <option value="Other">Other</option>
             </select>
           </div>
 
