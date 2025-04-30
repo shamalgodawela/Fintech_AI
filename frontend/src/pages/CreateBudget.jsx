@@ -114,6 +114,7 @@ const CreateBudget = () => {
             <h2 className="text-2xl font-bold">Create Budget</h2>
           </div>
 
+
           <form onSubmit={handleSubmit}>
             <div className="mb-4">
               <label className="block text-sm font-medium text-gray-300">
@@ -133,6 +134,7 @@ const CreateBudget = () => {
               <label className="block text-sm font-medium text-gray-300">
                 Category
               </label>
+              
               <select
                 name="category"
                 value={formData.category}
@@ -164,6 +166,7 @@ const CreateBudget = () => {
             <div className="mb-4">
               <label className="block text-sm font-medium text-gray-300">
                 Date
+
               </label>
               <input
                 type="date"

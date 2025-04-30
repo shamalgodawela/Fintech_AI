@@ -11,6 +11,7 @@ const createBudget = async (req, res) => {
 };
 
 // Get all budgets
+
 const getAllBudgets = async (req, res) => {
   try {
     const budgets = await budgetService.getAllBudgets();
@@ -19,6 +20,8 @@ const getAllBudgets = async (req, res) => {
     res.status(500).json({ message: error.message });
   }
 };
+
+
 
 // Get a budget by ID
 const getBudgetById = async (req, res) => {
@@ -32,6 +35,7 @@ const getBudgetById = async (req, res) => {
     res.status(500).json({ message: error.message });
   }
 };
+
 
 // Update a budget by ID
 const updateBudget = async (req, res) => {
