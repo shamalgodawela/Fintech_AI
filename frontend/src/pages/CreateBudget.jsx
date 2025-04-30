@@ -162,6 +162,7 @@ const CreateBudget = () => {
             <div className="mb-4">
               <label className="block text-sm font-medium text-gray-300">
                 Date
+                
               </label>
               <input
                 type="date"
