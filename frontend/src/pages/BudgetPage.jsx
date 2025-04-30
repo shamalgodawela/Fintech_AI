@@ -82,9 +82,11 @@ const BudgetPage = () => {
     doc.save(fileName);
   };
 
+  
   const formatNumbers = (x) => {
     return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
   };
+
   
 
   return (
@@ -170,7 +172,7 @@ const BudgetPage = () => {
               closeButton={false}
               toastClassName="custom-toast"  
             />
-            
+
     </div>
   );
 };
