@@ -59,7 +59,7 @@ const BudgetPage = () => {
   
     doc.text(title, titleX, 10);
   
-    // Use `doc.autoTable`, not `autoTable(doc, {...})`
+
     doc.autoTable({
       head: [["Amount", "Category", "Notes", "Start Date", "End Date"]],
       body: filteredBudgets.map((budget) => [
