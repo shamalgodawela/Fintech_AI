@@ -73,7 +73,7 @@ const BudgetPage = () => {
         budget.responsiblePerson,
         budget.phone
       ]),
-      theme: "grid",
+      theme: "grid",  
       headStyles: { fillColor: [0, 0, 0] },
       bodyStyles: { fillColor: [240, 240, 240] },
     });
@@ -82,7 +82,7 @@ const BudgetPage = () => {
     doc.save(fileName);
   };
 
-  
+
   const formatNumbers = (x) => {
     return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
   };
