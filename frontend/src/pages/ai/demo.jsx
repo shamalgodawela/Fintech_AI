@@ -42,7 +42,7 @@ const Ai = () => {
       .reduce((total, exp) => total + exp.amount, 0);
   };
 
-  // Helper function to calculate the total and count of previous months
+  // Helper function to calculate the total and count 
   const getPreviousMonthsData = () => {
     let total = 0;
     let monthsCount = 0;
