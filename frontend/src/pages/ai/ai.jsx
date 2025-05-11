@@ -130,10 +130,10 @@ const Ai = () => {
     // Add current month total
     doc.setFont('helvetica', 'normal');
     doc.setFontSize(14);
-    doc.text(`Current Month Total: $${getMonthTotal(currentMonth, currentYear).toFixed(2)}`, 14, 30);
+    doc.text(`Current Month Total: Rs/=${getMonthTotal(currentMonth, currentYear).toFixed(2)}`, 14, 30);
   
     // Add budget suggestion for next month
-    doc.text(`Budget Suggestion for Next Month: $${budgetSuggestion.toFixed(2)}`, 14, 40);
+    doc.text(`Budget Suggestion for Next Month: Rs/=${budgetSuggestion.toFixed(2)}`, 14, 40);
   
     // Line separator before the table
     doc.line(14, 45, 200, 45);
@@ -149,7 +149,7 @@ const Ai = () => {
         const totalAmount = groupedExpenses[monthYearKey];
         return {
           date: new Date(year, month).toLocaleString('default', { month: 'long', year: 'numeric' }),
-          total: `$${totalAmount.toFixed(2)}`
+          total: `Rs/=${totalAmount.toFixed(2)}`
         };
       });
   
