@@ -1,4 +1,4 @@
-// api/routes/incomeRoutes.js
+
 import express from 'express';
 import {
   getIncomes,

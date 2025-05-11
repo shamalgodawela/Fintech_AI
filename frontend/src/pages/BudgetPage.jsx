@@ -8,7 +8,6 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 
-
 const BudgetPage = () => {
   const [budgets, setBudgets] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
@@ -43,6 +42,9 @@ const BudgetPage = () => {
     navigate(`/edit-budget/${id}`);
   };
 
+
+  //
+
   const filteredBudgets = budgets.filter((budget) =>
     budget.category.toLowerCase().includes(searchQuery.toLowerCase())
   );
@@ -59,7 +61,7 @@ const BudgetPage = () => {
   
     doc.text(title, titleX, 10);
   
-    // Use `doc.autoTable`, not `autoTable(doc, {...})`
+
     doc.autoTable({
       head: [["Amount", "Category", "Notes", "Start Date", "End Date"]],
       body: filteredBudgets.map((budget) => [
@@ -70,17 +72,22 @@ const BudgetPage = () => {
         budget.responsiblePerson,
         budget.phone
       ]),
-      theme: "grid",
+      theme: "grid",  
       headStyles: { fillColor: [0, 0, 0] },
       bodyStyles: { fillColor: [240, 240, 240] },
     });
   
+
     doc.save(fileName);
   };
+
+
+  
 
   const formatNumbers = (x) => {
     return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
   };
+
   
 
   return (
@@ -116,6 +123,7 @@ const BudgetPage = () => {
           />
         </div>
 
+
         <div className="overflow-x-auto">
           <table className="min-w-full bg-gray-900 text-white border border-gray-700  ">
             <thead>
@@ -128,6 +136,8 @@ const BudgetPage = () => {
                 <th className="px-4 py-2">Phone</th>
                 <th className="px-4 py-2">Actions</th>
               </tr>
+        
+              
             </thead>
             <tbody>
               {filteredBudgets.map((budget) => (
@@ -156,12 +166,14 @@ const BudgetPage = () => {
         </div>
       </div>
        <ToastContainer 
+
               position="top-center" 
               autoClose={5000} 
               hideProgressBar
               closeButton={false}
               toastClassName="custom-toast"  
             />
+
     </div>
   );
 };

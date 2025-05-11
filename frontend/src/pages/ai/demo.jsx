@@ -9,12 +9,12 @@ const Ai = () => {
   const [error, setError] = useState('');
   const [budgetSuggestion, setBudgetSuggestion] = useState(0);
 
-  // Get the current date
+  // Get the current 
   const currentDate = new Date();
   const currentMonth = currentDate.getMonth();
   const currentYear = currentDate.getFullYear();
 
-  // Fetch expenses data from the API
+  // Fetch 
   useEffect(() => {
     const fetchExpenses = async () => {
       setIsLoading(true);
@@ -32,7 +32,7 @@ const Ai = () => {
     fetchExpenses();
   }, []);
 
-  // Helper function to calculate total amount for a given month
+  // Helper 
   const getMonthTotal = (month, year) => {
     return expenses
       .filter(exp => {
@@ -42,7 +42,7 @@ const Ai = () => {
       .reduce((total, exp) => total + exp.amount, 0);
   };
 
-  // Helper function to calculate the total and count of previous months
+  // Helper function to calculate 
   const getPreviousMonthsData = () => {
     let total = 0;
     let monthsCount = 0;

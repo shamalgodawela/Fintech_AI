@@ -1,3 +1,4 @@
+
 import React, { useEffect, useState, useRef } from "react";
 import { FaTrash, FaSave, FaEdit, FaDownload } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
@@ -19,7 +20,7 @@ import {
 } from "chart.js";
 import IncomeSidebar from "../Components/IncomeSidebar";
 
-// Register chart.js components
+
 ChartJS.register(
   Title,
   Tooltip,

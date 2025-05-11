@@ -57,7 +57,7 @@ export default function App() {
 
 
 
-         {/* Income Routes................................................................................................................. */}
+      
 
          <Route path="/ai" element={<Ai />}></Route>
          <Route path="/unlock" element={<Ui />}></Route>
