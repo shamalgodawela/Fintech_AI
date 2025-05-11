@@ -1,5 +1,5 @@
 import React from 'react';
-
+//home
 const Home = () => {
   return (
     <section className="home grid grid-cols-[45%_50%] place-items-center gap-12 bg-gradient-to-r from-[#434570] to-[#232439] overflow-hidden px-20 py-32">
