@@ -34,13 +34,13 @@ ChartJS.register(
 );
 
 // Set all chart text to white
-ChartJS.defaults.color = '#fff';
-ChartJS.defaults.plugins.legend.labels.color = '#fff';
-ChartJS.defaults.plugins.title.color = '#fff';
-ChartJS.defaults.plugins.tooltip.titleColor = '#fff';
-ChartJS.defaults.plugins.tooltip.bodyColor = '#fff';
-ChartJS.defaults.scales.category.ticks.color = '#fff';
-ChartJS.defaults.scales.linear.ticks.color = '#fff';
+ChartJS.defaults.color = "#fff";
+ChartJS.defaults.plugins.legend.labels.color = "#fff";
+ChartJS.defaults.plugins.title.color = "#fff";
+ChartJS.defaults.plugins.tooltip.titleColor = "#fff";
+ChartJS.defaults.plugins.tooltip.bodyColor = "#fff";
+ChartJS.defaults.scales.category.ticks.color = "#fff";
+ChartJS.defaults.scales.linear.ticks.color = "#fff";
 
 const IncomeDashboard = () => {
   const [incomes, setIncomes] = useState([]);
@@ -117,96 +117,218 @@ const IncomeDashboard = () => {
   // Function to download table and charts as PDF
   const downloadPDF = () => {
     const doc = new jsPDF();
-    const columns = ['Income Source','Category','Type','Amount','Description','Date'];
-    const rows = incomes.map(i=>[
-      i.incomeSource, i.incomeCategory, i.incomeType, `$${i.amount}`, i.description, new Date(i.date).toLocaleDateString()
+    const columns = [
+      "Income Source",
+      "Category",
+      "Type",
+      "Amount",
+      "Description",
+      "Date",
+    ];
+    const rows = incomes.map((i) => [
+      i.incomeSource,
+      i.incomeCategory,
+      i.incomeType,
+      `$${i.amount}`,
+      i.description,
+      new Date(i.date).toLocaleDateString(),
     ]);
-    doc.autoTable({ head:[columns], body:rows });
-    if(pieChartRef.current){ doc.addPage(); doc.setFontSize(16);
-      doc.text("Total Income by Type", doc.internal.pageSize.getWidth()/2,20,{align:"center"});
-      doc.addImage(pieChartRef.current.toBase64Image(),'PNG',30,30, doc.internal.pageSize.getWidth()-30,150);
+    doc.autoTable({ head: [columns], body: rows });
+    if (pieChartRef.current) {
+      doc.addPage();
+      doc.setFontSize(16);
+      doc.text(
+        "Total Income by Type",
+        doc.internal.pageSize.getWidth() / 2,
+        20,
+        { align: "center" }
+      );
+      doc.addImage(
+        pieChartRef.current.toBase64Image(),
+        "PNG",
+        30,
+        30,
+        doc.internal.pageSize.getWidth() - 30,
+        150
+      );
     }
-    if(barChartRef.current){ doc.addPage(); doc.setFontSize(16);
-      doc.text("Income by Category", doc.internal.pageSize.getWidth()/2,20,{align:"center"});
-      doc.addImage(barChartRef.current.toBase64Image(),'PNG',15,30, doc.internal.pageSize.getWidth()-30,100);
+    if (barChartRef.current) {
+      doc.addPage();
+      doc.setFontSize(16);
+      doc.text(
+        "Income by Category",
+        doc.internal.pageSize.getWidth() / 2,
+        20,
+        { align: "center" }
+      );
+      doc.addImage(
+        barChartRef.current.toBase64Image(),
+        "PNG",
+        15,
+        30,
+        doc.internal.pageSize.getWidth() - 30,
+        100
+      );
     }
-    doc.save('income-report.pdf');
+    doc.save("income-report.pdf");
   };
 
   // Filter incomes
-  const filtered = incomes.filter(i=>
-    Object.values(i).some(val=>
-      (['string','number'].includes(typeof val)) && val.toString().toLowerCase().includes(searchTerm.toLowerCase())
+  const filtered = incomes.filter((i) =>
+    Object.values(i).some(
+      (val) =>
+        (["string", "number"].includes(typeof val) &&
+          val.toString().toLowerCase().includes(searchTerm.toLowerCase()))
     )
   );
 
   // Pie chart data by type
-  const byType = filtered.reduce((a,i)=>{a[i.incomeType]=(a[i.incomeType]||0)+i.amount;return a;},{ });
-  const pieChartData = { labels:Object.keys(byType), datasets:[{ data:Object.values(byType), backgroundColor:['#FF6384','#36A2EB','#FFCE56','#4BC0C0','#9966FF'] }] };
-
-  // Bar chart data by category
-  const byCat = filtered.reduce((a,i)=>{a[i.incomeCategory]=(a[i.incomeCategory]||0)+i.amount;return a;},{ });
-  const barChartData = { labels:Object.keys(byCat), datasets:[{ label:'Income by Category', data:Object.values(byCat), backgroundColor:'#36A2EB', borderColor:'#36A2EB', borderWidth:1 }] };
-
-  // Line chart data by source
-  const bySource = filtered.reduce((a,i)=>{a[i.incomeSource]=(a[i.incomeSource]||0)+i.amount;return a;},{ });
-  const lineChartData = { labels:Object.keys(bySource), datasets:[{ label:'Income by Source', data:Object.values(bySource), fill:false, tension:0.1 }] };
-
-  // New: Monthly income trend
-  const byMonth = filtered.reduce((a,i)=>{
-    const key = new Date(i.date).toLocaleDateString(undefined,{month:'short',year:'numeric'});
-    a[key]=(a[key]||0)+i.amount;
+  const byType = filtered.reduce((a, i) => {
+    a[i.incomeType] = (a[i.incomeType] || 0) + i.amount;
     return a;
-  },{});
-  const monthlyChartData = {
-    labels: Object.keys(byMonth).sort((a,b)=> new Date(a) - new Date(b)),
-    datasets: [{ label:'Monthly Income Trend', data:Object.keys(byMonth).sort((a,b)=> new Date(a)-new Date(b)).map(m=>byMonth[m]), fill:false, tension:0.1 }]
+  }, {});
+  const pieChartData = {
+    labels: Object.keys(byType),
+    datasets: [
+      {
+        data: Object.values(byType),
+        backgroundColor: ["#FF6384", "#36A2EB", "#FFCE56", "#4BC0C0", "#9966FF"],
+      },
+    ],
   };
 
-  const totalIncome = filtered.reduce((sum,i)=>sum+i.amount,0);
-  const formatNum = x=>x.toString().replace(/\B(?=(\d{3})+(?!\d))/g,",");
+  // Bar chart data by category
+  const byCat = filtered.reduce((a, i) => {
+    a[i.incomeCategory] = (a[i.incomeCategory] || 0) + i.amount;
+    return a;
+  }, {});
+  const barChartData = {
+    labels: Object.keys(byCat),
+    datasets: [
+      {
+        label: "Income by Category",
+        data: Object.values(byCat),
+        backgroundColor: "#36A2EB",
+        borderColor: "#36A2EB",
+        borderWidth: 1,
+      },
+    ],
+  };
+
+  // Line chart data by source (with high-contrast color)
+  const bySource = filtered.reduce((a, i) => {
+    a[i.incomeSource] = (a[i.incomeSource] || 0) + i.amount;
+    return a;
+  }, {});
+  const lineChartData = {
+    labels: Object.keys(bySource),
+    datasets: [
+      {
+        label: "Income by Source",
+        data: Object.values(bySource),
+        fill: false,
+        tension: 0.1,
+        borderColor: "#FF6384",
+        backgroundColor: "#FF6384",
+        pointBackgroundColor: "#FF6384",
+      },
+    ],
+  };
+
+  // Monthly income trend (with high-contrast color)
+  const byMonth = filtered.reduce((a, i) => {
+    const key = new Date(i.date).toLocaleDateString(undefined, {
+      month: "short",
+      year: "numeric",
+    });
+    a[key] = (a[key] || 0) + i.amount;
+    return a;
+  }, {});
+  const monthlyChartData = {
+    labels: Object.keys(byMonth).sort(
+      (a, b) => new Date(a) - new Date(b)
+    ),
+    datasets: [
+      {
+        label: "Monthly Income Trend",
+        data: Object.keys(byMonth)
+          .sort((a, b) => new Date(a) - new Date(b))
+          .map((m) => byMonth[m]),
+        fill: false,
+        tension: 0.1,
+        borderColor: "#36A2EB",
+        backgroundColor: "#36A2EB",
+        pointBackgroundColor: "#36A2EB",
+      },
+    ],
+  };
+
+  const totalIncome = filtered.reduce((sum, i) => sum + i.amount, 0);
+  const formatNum = (x) =>
+    x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 
   return (
     <div className="flex h-screen w-full bg-gradient-to-r from-[#434570] to-[#232439]">
       <IncomeSidebar />
       <div className="flex-1 overflow-auto p-6">
-        <h2 className="text-4xl font-bold mb-4 text-center text-white">Income Dashboard</h2>
-        <div className="flex flex-wrap gap-2 mb-4 justify-center">
-          <div className="relative w-full max-w-lg mx-auto">
-            <input
-              type="text" placeholder="Search incomes by type or category..."
-              value={searchTerm} onChange={e=>setSearchTerm(e.target.value)}
-              className="w-full pl-10 pr-4 py-2 border rounded-md focus:outline-none focus:ring focus:ring-blue-300"
-            />
-          </div>
+        <h2 className="text-4xl font-bold mb-4 text-center text-white">
+          Income Dashboard
+        </h2>
+
+        {/* Search */}
+        <div className="flex justify-center mb-6">
+          <input
+            type="text"
+            placeholder="Search incomes..."
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+            className="w-full max-w-md p-2 border rounded focus:outline-none"
+          />
         </div>
-        <div className="max-w-md mx-auto shadow-lg rounded-xl p-6 mb-8">
-          <h3 className="text-2xl font-bold text-center text-white">Total Income</h3>
-          <p className="text-center text-3xl text-green-500 font-semibold mt-4">Rs:{formatNum(totalIncome.toFixed(2))}</p>
+
+        {/* Total Income */}
+        <div className="max-w-md mx-auto bg-slate-600 rounded-xl p-6 mb-8 shadow-lg">
+          <h3 className="text-2xl font-bold text-center text-white">
+            Total Income
+          </h3>
+          <p className="text-center text-3xl text-green-400 font-semibold mt-4">
+            Rs: {formatNum(totalIncome.toFixed(2))}
+          </p>
         </div>
-        <div className="flex flex-wrap gap-4 mb-8 justify-center">
-          <div className="w-[30%] min-w-[300px] shadow-lg rounded-xl p-6 mb-8 bg-slate-600">
-            <h3 className="text-xl font-bold text-center mb-2 text-black">Total Income by Type</h3>
+
+        {/* Pie & Bar */}
+        <div className="flex flex-wrap gap-4 justify-center mb-8">
+          <div className="w-[30%] min-w-[300px] bg-slate-600 rounded-xl p-6 shadow-lg">
+            <h3 className="text-xl font-bold text-center text-black mb-2">
+              Total Income by Type
+            </h3>
             <Pie data={pieChartData} ref={pieChartRef} />
           </div>
-          <div className="w-[48%] min-w-[300px] shadow-lg rounded-xl p-6 mb-8 bg-slate-600">
-            <h3 className="text-xl font-bold text-center mb-2 text-black">Total Income by Category</h3>
+          <div className="w-[48%] min-w-[300px] bg-slate-600 rounded-xl p-6 shadow-lg">
+            <h3 className="text-xl font-bold text-center text-black mb-2">
+              Total Income by Category
+            </h3>
             <Bar data={barChartData} ref={barChartRef} />
           </div>
         </div>
 
-        <div className="flex flex-wrap gap-4 mb-8 justify-center">
-            <div className="max-w-md mx-auto shadow-lg rounded-xl p-6 mb-8 bg-slate-600">
-              <h3 className="text-2xl font-bold text-center mb-4">Income by Source</h3>
-              <Line data={lineChartData} />
-            </div>
-            <div className="max-w-md mx-auto shadow-lg rounded-xl p-6 mb-8 bg-slate-600">
-              <h3 className="text-2xl font-bold text-center mb-4">Monthly Income Trend</h3>
-              <Line data={monthlyChartData} />
-            </div>
+        {/* Line Charts */}
+        <div className="flex flex-wrap gap-4 justify-center mb-8">
+          <div className="bg-slate-600 rounded-xl p-6 shadow-lg max-w-md w-full">
+            <h3 className="text-2xl font-bold text-center mb-4 text-black">
+              Income by Source
+            </h3>
+            <Line data={lineChartData} />
+          </div>
+          <div className="bg-slate-600 rounded-xl p-6 shadow-lg max-w-md w-full">
+            <h3 className="text-2xl font-bold text-center mb-4 text-black">
+              Monthly Income Trend
+            </h3>
+            <Line data={monthlyChartData} />
+          </div>
         </div>
 
-        <div className="max-w-full mx-auto shadow-lg bg-slate-600 rounded-xl p-6 mb-8 mt-6">
+         <div className="max-w-full mx-auto shadow-lg bg-slate-600 rounded-xl p-6 mb-8 mt-6">
           <h3 className="text-2xl font-bold text-center text-black mb-4">Income Summary</h3>
           <div className="flex flex-col md:flex-row justify-between">
             <div className="md:w-1/3">
