@@ -85,7 +85,7 @@ const ExpensesTable = () => {
                 <tr className="text-white bg-blue-900">
                   <th className="py-4 px-8 text-left">Name</th>
                   <th className="py-4 px-8 text-left">Category</th>
-                  <th className="py-4 px-8 text-left">Amount</th>
+                  <th className="py-4 px-8 text-left">Amount(RS)</th>
                   <th className="py-4 px-8 text-left">Date</th>
                   <th className="py-4 px-8 text-left">Actions</th>
                 </tr>
