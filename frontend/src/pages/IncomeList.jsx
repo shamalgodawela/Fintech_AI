@@ -190,15 +190,15 @@ const IncomeList = () => {
         </div>
 
         {/* Total Income Card */}
-        <div className="max-w-md mx-auto shadow-lg rounded-xl p-6 mb-8 ">
+        <div className="max-w-md mx-auto shadow-lg rounded-xl p-6 mb-8 bg-slate-200 bg-opacity-20 mt-4 ">
           <h3 className="text-2xl font-bold text-center text-green-400">Total Income</h3>
           <p className="text-center text-3xl font-semibold mt-4">Rs:{formatNumbers(totalIncome.toFixed(2))}</p>
         </div>
 
         {/* Income List Table */}
         <div className="overflow-x-auto shadow-md rounded-lg">
-          <table className="w-full bg-white border border-gray-200">
-            <thead className="bg-gray-400 text-slate-950">
+          <table className="w-full bg-black bg-opacity-40 border border-gray-200">
+            <thead className="bg-gray-400 text-white">
               <tr>
                 {['Income Source', 'Category', 'Type', 'Amount', 'Description', 'Date','phone', 'Actions'].map((header) => (
                   <th key={header} className="py-3 px-4 border-b text-center">{header}</th>
@@ -207,11 +207,11 @@ const IncomeList = () => {
             </thead>
             <tbody>
               {filteredIncomes.map((income) => (
-                <tr key={income._id} className="text-center border-b hover:bg-gray-50 transition">
+                <tr key={income._id} className="text-center border-b hover:bg-slate-800 transition">
                   {editingRow === income._id ? (
                     <>
                       
-                      <td className="py-2 px-4 border-b">
+                      <td className="py-2 px-4 border-b ">
                         <select
                           value={editedIncome[income._id]?.incomeSource || ''}
                           onChange={(e) => handleEditChange(income._id, 'incomeSource', e.target.value)}
@@ -308,14 +308,14 @@ const IncomeList = () => {
                     </>
                   ) : (
                     <>
-                      <td className="py-2 px-4 border-b">{income.incomeSource}</td>
-                      <td className="py-2 px-4 border-b">{income.incomeCategory}</td>
-                      <td className="py-2 px-4 border-b">{income.incomeType}</td>
-                      <td className="py-2 px-4 border-b">Rs:{formatNumbers(income.amount)}</td>
-                      <td className="py-2 px-4 border-b">{income.description}</td>
-                      <td className="py-2 px-4 border-b">{new Date(income.date).toLocaleDateString()}</td>
-                      <td className="py-2 px-4 border-b">{income.phone}</td>
-                      <td className="py-2 px-4 border-b">
+                      <td className="py-2 px-4 border-b  text-white">{income.incomeSource}</td>
+                      <td className="py-2 px-4 border-b  text-white">{income.incomeCategory}</td>
+                      <td className="py-2 px-4 border-b  text-white">{income.incomeType}</td>
+                      <td className="py-2 px-4 border-b  text-white">Rs:{formatNumbers(income.amount)}</td>
+                      <td className="py-2 px-4 border-b  text-white">{income.description}</td>
+                      <td className="py-2 px-4 border-b  text-white">{new Date(income.date).toLocaleDateString()}</td>
+                      <td className="py-2 px-4 border-b  text-white">{income.phone}</td>
+                      <td className="py-2 px-4 border-b  text-white">
                         <button
                           onClick={() => handleEditClick(income._id)}
                           className="bg-blue-500 text-white p-2 rounded-md mx-2"
