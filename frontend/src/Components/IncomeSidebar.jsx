@@ -9,7 +9,7 @@ const ExepenseSidebar = () => {
 
   return (
     <div className={`flex ${isActive ? 'ml-0' : 'ml-[225px]'} transition-all`}>
-      {/* Sidebar */}
+      {/* Sidebar---- */}
       <div
         className={`fixed top-0 left-0 w-[225px] h-full bg-[#070c21] p-5 transition-all ${
           isActive ? 'left-[-225px]' : 'left-0'

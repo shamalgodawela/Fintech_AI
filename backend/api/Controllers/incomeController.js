@@ -1,5 +1,8 @@
 import Income from '../Models/incomeModel.js';
 
+// Regular expression for 10-digit phone numbers
+const phoneRegex = /^\d{10}$/;
+
 // Get all income entries
 export const getIncomes = async (req, res) => {
   try {
@@ -21,17 +24,25 @@ export const getIncomeById = async (req, res) => {
   }
 };
 
-// Creat dfdfdf dannama
+// Create a new income entry
 export const createIncome = async (req, res) => {
   try {
-    const { incomeSource, description, incomeCategory, incomeType, amount,date,phone } = req.body;
+    const { incomeSource, description, incomeCategory, incomeType, amount, date, phone } = req.body;
 
     // Validate required fields
-    if (!incomeSource || !description || !incomeCategory || !incomeType || !amount) {
-      return res.status(400).json({ message: 'All fields are required' });
+    if (!incomeSource || !description || !incomeCategory || !incomeType || amount === undefined || !phone) {
+      return res.status(400).json({ message: 'All fields including phone number are required' });
     }
 
-  
+    // Validate amount
+    if (typeof amount !== 'number' || amount <= 0) {
+      return res.status(400).json({ message: 'Amount must be a positive number' });
+    }
+
+    // Validate phone number
+    if (!phoneRegex.test(phone)) {
+      return res.status(400).json({ message: 'Phone number must be exactly 10 digits and contain only numbers' });
+    }
 
     const newIncome = new Income({
       incomeSource,
@@ -50,24 +61,29 @@ export const createIncome = async (req, res) => {
   }
 };
 
-// Update an income entry
+// Update an existing income entry
 export const updateIncome = async (req, res) => {
   try {
-    const { incomeSource, description, incomeCategory, incomeType, amount,phone} = req.body;
+    const { incomeSource, description, incomeCategory, incomeType, amount, phone } = req.body;
 
+    // Validate required fields
+    if (!incomeSource || !incomeCategory || !incomeType || amount === undefined || !phone) {
+      return res.status(400).json({ message: 'Income Source, Income Category, Income Type, Amount, and phone number are required' });
+    }
 
-// Validate required fields (description is optional, amount must be a number)
-if (!incomeSource || !incomeCategory || !incomeType || amount === undefined) {
-  return res.status(400).json({ message: 'Income Source, Income Category, Income Type, and Amount are required' });
-}
+    // Validate amount
+    if (typeof amount !== 'number' || amount <= 0) {
+      return res.status(400).json({ message: 'Amount must be a positive number' });
+    }
 
-if (typeof amount !== 'number' || amount <= 0) {
-  return res.status(400).json({ message: 'Amount must be a positive number' });
-}
+    // Validate phone number
+    if (!phoneRegex.test(phone)) {
+      return res.status(400).json({ message: 'Phone number must be exactly 10 digits and contain only numbers' });
+    }
 
     const updatedIncome = await Income.findByIdAndUpdate(
       req.params.id,
-      { incomeSource, description, incomeCategory, incomeType, amount ,phone},
+      { incomeSource, description, incomeCategory, incomeType, amount, phone },
       { new: true }
     );
 

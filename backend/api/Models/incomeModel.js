@@ -8,7 +8,7 @@ const incomeSchema = new mongoose.Schema({
   },
   description: {
     type: String,
-    required: true, 
+     
   },
   incomeCategory: {
     type: String,
