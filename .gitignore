@@ -1,4 +1,22 @@
+# Do not commit if these appear on disk (known PolinRider-related / stray dropper names)
 config.bat
-node_modules
 temp_auto_push.bat
 temp_interactive_push.bat
+
+node_modules/
+
+# Secrets and local env (never commit)
+.env
+.env.*
+!.env.example
+
+# Build / cache
+dist/
+build/
+.cache/
+*.local
+
+# Logs and OS noise
+*.log
+.DS_Store
+Thumbs.db
